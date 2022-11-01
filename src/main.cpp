@@ -13,9 +13,6 @@ int main()
     std::cout << "Starting game" << std::endl;
     std::cout << "Refresh rate is " << Util::getRefreshRate() << "hz." << std::endl;
     Game game;
-
-    // system("pause");
-
     std::cout << "Goodbye!" << std::endl;
 
     return 0;

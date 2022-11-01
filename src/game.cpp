@@ -28,7 +28,7 @@ bool screenInit = false;
 using Font = sf::Font;
 std::atomic<bool> exit_thread_flag{false};
 
-Game* Game::inst_ = NULL;
+Game *Game::inst_ = NULL;
 sf::Vector2f pos = sf::Vector2f(0, 0);
 Font Game::mainFont;
 
@@ -43,7 +43,7 @@ Game::~Game()
 {
     delete this->window;
     exit_thread_flag = true;
-    
+
     std::cout << "Game destroyed" << std::endl;
 }
 
@@ -58,9 +58,8 @@ void Game::onResize(int x, int y)
 
     // Limit the size
     this->window->setSize(sf::Vector2u(
-        std::max(MIN_WIDTH, (int) this->window->getSize().x),
-        std::max(MIN_HEIGHT, (int) this->window->getSize().y)
-    ));
+        std::max(MIN_WIDTH, (int)this->window->getSize().x),
+        std::max(MIN_HEIGHT, (int)this->window->getSize().y)));
 }
 
 void Game::onWindowClosed()
@@ -76,57 +75,57 @@ void Game::pollEvents()
     {
         switch (event.type)
         {
-            case sf::Event::Closed:
+        case sf::Event::Closed:
+        {
+            this->onWindowClosed();
+            break;
+        }
+
+        case sf::Event::Resized:
+        {
+            this->onResize(event.size.width, event.size.height);
+            break;
+        }
+
+        case sf::Event::KeyPressed:
+        {
+            KeyboardManager::onKeyPressed(event.key.code); // Update state
+
+            if (event.key.code == sf::Keyboard::F11)
             {
-                this->onWindowClosed();
-                break;
+                this->toggleFullscreen();
             }
 
-            case sf::Event::Resized:
-            {
-                this->onResize(event.size.width, event.size.height);
-                break;
-            }
+            // std::cout << "Key pressed: " << KeyboardManager::getKeyName(event.key.code) << std::endl;
+            break;
+        }
 
-            case sf::Event::KeyPressed:
-            {
-                KeyboardManager::onKeyPressed(event.key.code); // Update state
+        case sf::Event::KeyReleased:
+        {
+            KeyboardManager::onKeyReleased(event.key.code);
+            break;
+        }
 
-                if (event.key.code == sf::Keyboard::F11)
-                {
-                    this->toggleFullscreen();
-                }
+        case sf::Event::MouseButtonPressed:
+        {
+            MouseManager::onMousePressed(event.mouseButton.button);
+            break;
+        }
 
-                // std::cout << "Key pressed: " << KeyboardManager::getKeyName(event.key.code) << std::endl;
-                break;
-            }
+        case sf::Event::MouseButtonReleased:
+        {
+            MouseManager::onMouseReleased(event.mouseButton.button);
+            break;
+        }
 
-            case sf::Event::KeyReleased:
-            {
-                KeyboardManager::onKeyReleased(event.key.code);
-                break;
-            }
+        case sf::Event::MouseMoved:
+        {
+            MouseManager::onMouseMove(event.mouseMove);
+            break;
+        }
 
-            case sf::Event::MouseButtonPressed:
-            {
-                MouseManager::onMousePressed(event.mouseButton.button);
-                break;
-            }
-
-            case sf::Event::MouseButtonReleased:
-            {
-                MouseManager::onMouseReleased(event.mouseButton.button);
-                break;
-            }
-
-            case sf::Event::MouseMoved:
-            {
-                MouseManager::onMouseMove(event.mouseMove);
-                break;
-            }
-
-            default:
-                break;
+        default:
+            break;
         }
     }
 }
@@ -151,7 +150,7 @@ void Game::toggleFullscreen()
         Util::GetDesktopResolution(w, h);
 
         this->window->setSize(sf::Vector2u(w, h)); // yeah
-        this->onResize(w, h); // Call resize event
+        this->onResize(w, h);                      // Call resize event
         this->window->create(sf::VideoMode(w, h), this->getName(), sf::Style::Fullscreen);
     }
 }
@@ -160,7 +159,7 @@ bool Game::isFullscreen()
 {
     sf::Vector2u window_size = this->window->getSize();
     int w, h;
-    
+
     int w_ = window_size.x;
     int h_ = window_size.y;
 
@@ -198,6 +197,62 @@ void Game::exit()
     this->onWindowClosed();
 }
 
+void tickThread()
+{
+    // 20 times per second
+    Game *instance = Game::getInstance();
+    sf::RenderWindow *window = (sf::RenderWindow *)instance->getWindow();
+    while (!exit_thread_flag)
+    {
+        instance->update();
+        std::cout << instance->getFramerate() << "\tFPS" << std::endl;
+        std::this_thread::sleep_for(std::chrono::milliseconds(50));
+    }
+
+    // std::terminate();
+}
+
+void Game::createThread()
+{
+    std::cout << "Starting test thread" << std::endl;
+    std::thread thread(&tickThread);
+    thread.detach();
+}
+
+Game *Game::getInstance()
+{
+    if (inst_ == nullptr)
+    {
+        throw new std::runtime_error("Game::getInstance() called but instance is null");
+    }
+    return inst_;
+}
+
+int Game::getFramerate()
+{
+    return this->fps;
+}
+
+void Game::setTitle(std::string title)
+{
+    this->window->setTitle(title);
+}
+
+std::string Game::getName()
+{
+    return "Lat Game";
+}
+
+sf::Window *Game::getWindow()
+{
+    return this->window;
+}
+
+Font Game::getMainFont()
+{
+    return Game::mainFont;
+}
+
 void Game::run()
 {
     sf::Clock clock;
@@ -225,60 +280,4 @@ void Game::render()
 
 void Game::update()
 {
-}
-
-void tickThread()
-{
-    // 20 times per second
-    Game* instance = Game::getInstance();
-    sf::RenderWindow* window = (sf::RenderWindow*) instance->getWindow();
-    while(!exit_thread_flag)
-    {
-        instance->update();
-        std::cout << instance->getFramerate() << "\tFPS" << std::endl;
-        std::this_thread::sleep_for(std::chrono::milliseconds(50));
-    }
-
-    // std::terminate();
-}
-
-void Game::createThread()
-{
-    std::cout << "Starting test thread" << std::endl;
-    std::thread thread(&tickThread);
-    thread.detach();
-}
-
-Game* Game::getInstance()
-{
-    if (inst_ == nullptr)
-    {
-        throw new std::runtime_error("Game::getInstance() called but instance is null");
-    }
-    return inst_;
-}
-
-int Game::getFramerate()
-{
-    return this->fps;
-}
-
-void Game::setTitle(std::string title)
-{
-    this->window->setTitle(title);
-}
-
-std::string Game::getName()
-{
-    return "Lat Game";
-}
-
-sf::Window* Game::getWindow()
-{
-    return this->window;
-}
-
-Font Game::getMainFont()
-{
-    return Game::mainFont;
 }
