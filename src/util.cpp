@@ -8,7 +8,7 @@
 
 BOOL CALLBACK MonitorEnumProc(HMONITOR hMonitor, HDC hdcMonitor, LPRECT lprcMonitor, LPARAM dwData)
 {
-    int *Count = (int*)dwData;
+    int *Count = (int *)dwData;
     (*Count)++;
     return TRUE;
 }
@@ -18,7 +18,7 @@ int Util::getMonitorCount()
     int count = 0;
     if (EnumDisplayMonitors(NULL, NULL, MonitorEnumProc, (LPARAM)&count))
         return count;
-    return -1;//signals an error
+    return -1; // signals an error
 }
 
 int Util::getDisplayRefreshRate(int i)
@@ -55,9 +55,10 @@ int Util::getRefreshRate()
 
         return max;
     }
+    return 0;
 }
 
-void Util::GetDesktopResolution(int& horizontal, int& vertical)
+void Util::GetDesktopResolution(int &horizontal, int &vertical)
 {
     horizontal = ::GetSystemMetrics(SM_CXSCREEN);
     vertical = ::GetSystemMetrics(SM_CYSCREEN);

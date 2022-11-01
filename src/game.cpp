@@ -279,4 +279,5 @@ void Game::render()
 
 void Game::update()
 {
+    // fizika();
 }
