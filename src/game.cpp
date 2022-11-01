@@ -26,6 +26,9 @@
 // Scene
 #include "scene/scene.h"
 
+// Screen
+#include "screen/screen.h"
+
 #define MIN_WIDTH 800
 #define MIN_HEIGHT 600
 
@@ -33,6 +36,7 @@ bool sceneInit = false;
 bool screenInit = false;
 
 Scene *currscene = nullptr;
+Screen *currscreen = nullptr;
 
 using Font = sf::Font;
 std::atomic<bool> exit_thread_flag{false};
@@ -58,6 +62,12 @@ void Game::handleExit()
     if (currscene != nullptr)
     {
         currscene->destroy();
+        delete currscene;
+    }
+    if (currscreen != nullptr)
+    {
+        currscreen->destroy();
+        delete currscreen;
     }
 
     delete this->window;
@@ -294,6 +304,10 @@ void Game::render()
     {
         currscene->render();
     }
+    if (currscreen != nullptr)
+    {
+        currscreen->render();
+    }
 }
 
 void Game::update()
@@ -301,6 +315,10 @@ void Game::update()
     if (currscene != nullptr)
     {
         currscene->update();
+    }
+    if (currscreen != nullptr)
+    {
+        currscreen->update();
     }
 }
 
@@ -312,4 +330,14 @@ void Game::setScene(Scene *arg)
     }
     currscene = arg;
     currscene->init();
+}
+
+void Game::setScreen(Screen *arg)
+{
+    if (currscreen != nullptr)
+    {
+        currscreen->destroy();
+    }
+    currscreen = arg;
+    currscreen->init();
 }

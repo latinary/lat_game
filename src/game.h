@@ -6,6 +6,7 @@
 #include <atomic>
 
 #include "scene/scene.h"
+#include "screen/screen.h"
 
 using Font = sf::Font;
 
@@ -38,4 +39,5 @@ public:
     void exit();
     Font getMainFont();
     void setScene(Scene *arg);
+    void setScreen(Screen *arg);
 };
