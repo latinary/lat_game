@@ -50,10 +50,18 @@ Game::Game()
 
 Game::~Game()
 {
+    std::cout << "Game destroyed" << std::endl;
+}
+
+void Game::handleExit()
+{
+    if (currscene != nullptr)
+    {
+        currscene->destroy();
+    }
+
     delete this->window;
     exit_thread_flag = true;
-
-    std::cout << "Game destroyed" << std::endl;
 }
 
 void Game::onResize(int x, int y)
@@ -74,6 +82,7 @@ void Game::onResize(int x, int y)
 void Game::onWindowClosed()
 {
     this->window->close();
+    this->handleExit();
     this->~Game(); // Destroy the game
 }
 
@@ -293,4 +302,14 @@ void Game::update()
     {
         currscene->update();
     }
+}
+
+void Game::setScene(Scene *arg)
+{
+    if (currscene != nullptr)
+    {
+        currscene->destroy();
+    }
+    currscene = arg;
+    currscene->init();
 }

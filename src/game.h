@@ -20,6 +20,7 @@ private:
     void createThread();
     void onResize(int x, int y);
     void onWindowClosed();
+    void handleExit();
 
 public:
     static sf::Font mainFont;
