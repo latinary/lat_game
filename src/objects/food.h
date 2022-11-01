@@ -1,8 +1,9 @@
 #pragma once
 
-class Blob
+class Food
 {
 private:
     int x;
     int y;
+    int size;
 };

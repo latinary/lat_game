@@ -5,6 +5,8 @@
 #include <thread>
 #include <atomic>
 
+#include "scene/scene.h"
+
 using Font = sf::Font;
 
 class Game
@@ -34,4 +36,5 @@ public:
     void toggleFullscreen();
     void exit();
     Font getMainFont();
+    void setScene(Scene *arg);
 };

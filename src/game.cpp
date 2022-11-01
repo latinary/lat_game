@@ -21,12 +21,18 @@
 
 // Objects
 #include "objects/blob.h"
+#include "objects/food.h"
+
+// Scene
+#include "scene/scene.h"
 
 #define MIN_WIDTH 800
 #define MIN_HEIGHT 600
 
 bool sceneInit = false;
 bool screenInit = false;
+
+Scene *currscene = nullptr;
 
 using Font = sf::Font;
 std::atomic<bool> exit_thread_flag{false};
@@ -275,9 +281,16 @@ void Game::run()
 
 void Game::render()
 {
+    if (currscene != nullptr)
+    {
+        currscene->render();
+    }
 }
 
 void Game::update()
 {
-    // fizika();
+    if (currscene != nullptr)
+    {
+        currscene->update();
+    }
 }
