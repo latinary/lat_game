@@ -265,7 +265,7 @@ void Game::run()
     // Blob *Mislav = new Blob; |
     // Mislav->x = 5;          |
     // delete Mislav;         |     ---> ak obrises peder si
-    // -----------------------
+    // -----------------------      ---> Neeeeeeeeeeeeeeeeeeeeeeee
 
     while (this->window->isOpen())
     {
