@@ -174,12 +174,14 @@ void Game::init()
     this->window->setFramerateLimit(Util::getRefreshRate()); // limit FPS to refresh rate
     this->window->setVerticalSyncEnabled(true);
 
-    std::cout << "Game path is " << Util::getExecutablePath() << std::endl;
+    std::string gamePath = Util::getExecutablePath();
+
+    std::cout << "Game path is " << gamePath << std::endl;
 
     // Load fonts
     std::cout << "Loading fonts..." << std::endl;
 
-    if (!Game::mainFont.loadFromFile("D:\\Code\\C++\\actual_stuff\\games\\first_game\\fonts\\ayar.ttf"))
+    if (!Game::mainFont.loadFromFile(gamePath + "\\assets\\fonts\\ayar.ttf"))
     {
         std::cout << "Failed to load font" << std::endl;
     }
