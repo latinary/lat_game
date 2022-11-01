@@ -173,8 +173,9 @@ bool Game::isFullscreen()
 
 void Game::init()
 {
-    this->window->setFramerateLimit(Util::getRefreshRate()); // limit FPS to refresh rate
-    this->window->setVerticalSyncEnabled(true);
+    // Util::getRefreshRate()
+    this->window->setFramerateLimit(144); // limit FPS to refresh rate
+    // this->window->setVerticalSyncEnabled(true);
 
     std::string gamePath = Util::getExecutablePath();
 
@@ -208,7 +209,7 @@ void tickThread()
     while (!exit_thread_flag)
     {
         instance->update();
-        std::cout << instance->getFramerate() << "\tFPS" << std::endl;
+        std::cout << Util::getRefreshRate() << "\tFPS" << std::endl;
         std::this_thread::sleep_for(std::chrono::milliseconds(50));
     }
 
@@ -229,11 +230,6 @@ Game *Game::getInstance()
         throw new std::runtime_error("Game::getInstance() called but instance is null");
     }
     return inst_;
-}
-
-int Game::getFramerate()
-{
-    return this->fps;
 }
 
 void Game::setTitle(std::string title)
@@ -258,9 +254,6 @@ Font Game::getMainFont()
 
 void Game::run()
 {
-    sf::Clock clock;
-    float lastTime = clock.restart().asMicroseconds();
-
     // ----------------------------
     // Blob *Mislav = new Blob(); |
     // Mislav->x = 5;            |
@@ -269,17 +262,14 @@ void Game::run()
 
     while (this->window->isOpen())
     {
-        this->pollEvents();
+        this->pollEvents(); // on/off
 
         // Update frame
-        this->window->clear();
+        this->window->clear(); // ---> ? nez
+
         // Render frame
         this->render();
         this->window->display();
-
-        float currentTime = clock.restart().asMicroseconds();
-        this->fps = (1.f / (std::abs(currentTime - lastTime))) * 1000;
-        lastTime = currentTime;
     }
 }
 
