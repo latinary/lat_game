@@ -1,14 +1,15 @@
 {
     "configurations": [
     {
-        "name": "(gdb) Launch",
+        "name": "Launch and Debug",
         "type": "cppdbg",
         "request": "launch",
-        "program": "${workspaceFolder}/main.exe",
+        "program": "${workspaceFolder}/out/main.exe",
         "args": [],
         "stopAtEntry": false,
         "cwd": "${fileDirname}",
         "environment": [],
+        "preLaunchTask": "build",
         "externalConsole": false,
         "MIMode": "gdb",
         "miDebuggerPath": "C:\\msys64\\mingw64\\bin\\gdb.exe",
