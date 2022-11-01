@@ -5,6 +5,8 @@
 namespace Util
 {
     int getRefreshRate();
+    int getDisplayRefreshRate(int i);
+    int getMonitorCount();
     void GetDesktopResolution(int& horizontal, int& vertical);
     std::string getExecutablePath();
     void setPointerCursor();
