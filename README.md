@@ -1,4 +1,4 @@
 # lat_game ---> life literally
 
-learning about machine learning and neural networks.
-blob evolve.
+Learning about machine learning and neural networks.
+Basically just two high schoolers making a world in which a bunch of creatures (Blobs) compete for survival and evolve.
