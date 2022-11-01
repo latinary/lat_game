@@ -19,6 +19,9 @@
 #include "game.h"
 #include "util.h"
 
+// Objects
+#include "objects/blob.h"
+
 #define MIN_WIDTH 800
 #define MIN_HEIGHT 600
 
@@ -257,6 +260,12 @@ void Game::run()
 {
     sf::Clock clock;
     float lastTime = clock.restart().asMicroseconds();
+
+    // --------------------------
+    // Blob *Mislav = new Blob; |
+    // Mislav->x = 5;          |
+    // delete Mislav;         |     ---> ak obrises peder si
+    // -----------------------
 
     while (this->window->isOpen())
     {
