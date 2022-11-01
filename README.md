@@ -1,4 +1,4 @@
-# lat_game
+# lat_game ---> life literally
 plane go brrrt
 
 pro brutal cp
