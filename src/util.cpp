@@ -26,7 +26,7 @@ int Util::getDisplayRefreshRate(int i)
     DEVMODEA screen;
     memset(&screen, 0, sizeof(DEVMODEA));
     if (!EnumDisplaySettingsA(NULL, 0, &screen)) // TODO: fix, gets info on first monitor
-    {
+    {                                            // TODO: delete ;_;
         return -1;
     }
     return screen.dmDisplayFrequency;
@@ -34,28 +34,13 @@ int Util::getDisplayRefreshRate(int i)
 
 int Util::getRefreshRate()
 {
-    int count = Util::getMonitorCount();
-
-    if (count == -1)
+    int mx = 0;
+    for (int i = 0; i < Util::getMonitorCount(); ++i)
     {
-        return Util::getDisplayRefreshRate(0);
+        int temp = Util::getDisplayRefreshRate(i);
+        mx = (mx > temp ? mx : temp);
     }
-    else
-    {
-        int max = -1;
-        for (int i = 0; i < count; i++)
-        {
-            int res = Util::getDisplayRefreshRate(i);
-            if (res > max)
-            {
-                max = res;
-            }
-            // cout << "Monitor " << i << ", refresh rate is " << res << "\n";
-        }
-
-        return max;
-    }
-    return 0;
+    return mx;
 }
 
 void Util::GetDesktopResolution(int &horizontal, int &vertical)
