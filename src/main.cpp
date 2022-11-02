@@ -13,7 +13,7 @@
 int main()
 {
     std::cout << "Starting game" << std::endl;
-    std::cout << "Refresh rate is " << Util::getRefreshRate() << "hz." << std::endl;
+    // std::cout << "Refresh rate is " << Util::getRefreshRate() << "hz." << std::endl; --> funkcija ne postoji vise tak da je red vjv beskoristan
     Game game;
     std::cout << "Goodbye!" << std::endl;
 

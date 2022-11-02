@@ -199,8 +199,8 @@ bool Game::isFullscreen()
 void Game::init()
 {
     // Util::getRefreshRate()
-    this->window->setFramerateLimit(144); // limit FPS to refresh rate
-    // this->window->setVerticalSyncEnabled(true);
+    // this->window->setFramerateLimit(144); // limit FPS to refresh rate
+    this->window->setVerticalSyncEnabled(true); // bolje kasnije stavit u postavke i dat useru da bira na kolko ce limitat fps ali za sad best solution je vsync
 
     std::string gamePath = Util::getExecutablePath();
 
@@ -234,7 +234,7 @@ void tickThread()
     while (!exit_thread_flag)
     {
         instance->update();
-        std::cout << Util::getRefreshRate() << "\tFPS" << std::endl;
+        // std::cout << Util::getRefreshRate() << "\tFPS" << std::endl; -> funkcija ne postoji
         std::this_thread::sleep_for(std::chrono::milliseconds(50));
     }
 

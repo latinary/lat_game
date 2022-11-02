@@ -13,36 +13,6 @@ BOOL CALLBACK MonitorEnumProc(HMONITOR hMonitor, HDC hdcMonitor, LPRECT lprcMoni
     return TRUE;
 }
 
-int Util::getMonitorCount()
-{
-    int count = 0;
-    if (EnumDisplayMonitors(NULL, NULL, MonitorEnumProc, (LPARAM)&count))
-        return count;
-    return -1; // signals an error
-}
-
-int Util::getDisplayRefreshRate(int i)
-{
-    DEVMODEA screen;
-    memset(&screen, 0, sizeof(DEVMODEA));
-    if (!EnumDisplaySettingsA(NULL, 0, &screen)) // TODO: fix, gets info on first monitor
-    {                                            // TODO: delete ;_;
-        return -1;
-    }
-    return screen.dmDisplayFrequency;
-}
-
-int Util::getRefreshRate()
-{
-    int mx = 0;
-    for (int i = 0; i < Util::getMonitorCount(); ++i)
-    {
-        int temp = Util::getDisplayRefreshRate(i);
-        mx = (mx > temp ? mx : temp);
-    }
-    return mx;
-}
-
 void Util::GetDesktopResolution(int &horizontal, int &vertical)
 {
     horizontal = ::GetSystemMetrics(SM_CXSCREEN);
@@ -68,3 +38,35 @@ void Util::setDefaultCursor()
     HCURSOR cursor = LoadCursor(NULL, IDC_ARROW);
     SetCursor(cursor);
 }
+
+/*
+int Util::getMonitorCount()
+{
+    int count = 0;
+    if (EnumDisplayMonitors(NULL, NULL, MonitorEnumProc, (LPARAM)&count))
+        return count;
+    return -1; // signals an error
+}
+
+int Util::getDisplayRefreshRate(int i)
+{
+    DEVMODEA screen;
+    memset(&screen, 0, sizeof(DEVMODEA));
+    if (!EnumDisplaySettingsA(NULL, 0, &screen)) // TODO: fix, gets info on first monitor
+    {                                            // TODO: delete ;_;
+        return -1;
+    }
+    return screen.dmDisplayFrequency;
+}
+
+int Util::getRefreshRate()
+{
+    int mx = 0;
+    for (int i = 0; i < Util::getMonitorCount(); ++i)   --------> probably useless code jer mozemo ukljucit vsync
+    {
+        int temp = Util::getDisplayRefreshRate(i);
+        mx = (mx > temp ? mx : temp);
+    }
+    return mx;
+}
+*/
