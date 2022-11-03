@@ -308,6 +308,11 @@ void Game::render()
     {
         currscreen->render();
     }
+
+    sf::RectangleShape rect(sf::Vector2f(69, 420));
+    rect.setPosition(sf::Vector2f(50, 50));
+
+    window->draw(rect);
 }
 
 void Game::update()

@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include "util.h"
+#include <SFML/Graphics.hpp>
 
 #define vector std::vector
 #define cout std::cout
@@ -39,34 +40,7 @@ void Util::setDefaultCursor()
     SetCursor(cursor);
 }
 
-/*
-int Util::getMonitorCount()
+void Util::GUI::roundRect(sf::Vector2f pos, sf::Vector2f dimens)
 {
-    int count = 0;
-    if (EnumDisplayMonitors(NULL, NULL, MonitorEnumProc, (LPARAM)&count))
-        return count;
-    return -1; // signals an error
-}
 
-int Util::getDisplayRefreshRate(int i)
-{
-    DEVMODEA screen;
-    memset(&screen, 0, sizeof(DEVMODEA));
-    if (!EnumDisplaySettingsA(NULL, 0, &screen)) // TODO: fix, gets info on first monitor
-    {                                            // TODO: delete ;_;
-        return -1;
-    }
-    return screen.dmDisplayFrequency;
 }
-
-int Util::getRefreshRate()
-{
-    int mx = 0;
-    for (int i = 0; i < Util::getMonitorCount(); ++i)   --------> probably useless code jer mozemo ukljucit vsync
-    {
-        int temp = Util::getDisplayRefreshRate(i);
-        mx = (mx > temp ? mx : temp);
-    }
-    return mx;
-}
-*/
