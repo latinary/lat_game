@@ -28,6 +28,7 @@
 
 // Screen
 #include "screen/screen.h"
+#include "screen/screens/main_menu.h"
 
 #define MIN_WIDTH 800
 #define MIN_HEIGHT 600
@@ -217,6 +218,7 @@ void Game::init()
     std::cout << "Game initialized" << std::endl;
 
     this->createThread();
+    this->setScreen(new MainMenu());
     this->run();
 }
 
