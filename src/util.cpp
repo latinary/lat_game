@@ -51,6 +51,7 @@ sf::ConvexShape Util::GUI::roundRect(sf::Vector2f pos, sf::Vector2f dimens, floa
     sf::ConvexShape rrect;
     rrect.setOutlineThickness(0);
     rrect.setPointCount(POINTS * 4);
+    rrect.setFillColor(color);
 
     int point = 0;
 
