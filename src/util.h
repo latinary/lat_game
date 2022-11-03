@@ -15,6 +15,6 @@ namespace Util
     
     namespace GUI
     {
-        void roundRect(sf::Vector2f pos, sf::Vector2f dimens);
+        sf::ConvexShape roundRect(sf::Vector2f pos, sf::Vector2f dimens, float radius, sf::Color color);
     };
 };

@@ -309,10 +309,8 @@ void Game::render()
         currscreen->render();
     }
 
-    sf::RectangleShape rect(sf::Vector2f(69, 420));
-    rect.setPosition(sf::Vector2f(50, 50));
-
-    window->draw(rect);
+    sf::ConvexShape r = Util::GUI::roundRect(sf::Vector2f(25, 25), sf::Vector2f(150, 150), 25, sf::Color(255, 255, 255));
+    window->draw(r);
 }
 
 void Game::update()
